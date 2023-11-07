@@ -29,5 +29,5 @@ uvicorn==0.23.2
 uvloop==0.17.0
 watchfiles==0.20.0
 websockets==11.0.3
-mysqlclient==2.2.0
+# mysqlclient==2.2.0
 python-dotenv==1.0.0
