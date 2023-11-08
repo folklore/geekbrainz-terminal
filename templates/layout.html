@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load static %}
 <html>
 <head>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.9.3/semantic.min.js"
@@ -9,11 +10,14 @@
           href="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.9.3/semantic.min.css"
           integrity="sha512-3quBdRGJyLy79hzhDDcBzANW+mVqPctrGCfIPosHQtMKb3rKsCxfyslzwlz2wj1dT8A7UX+sEvDjaUv+WExQrA=="
           crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <title>{% block title %}title{% endblock %} :: Brewery</title>
+    <link rel="stylesheet" href="{% static 'css/application.css' %}" />
+    <title>{% block title %}title{% endblock %} :: Про пиво</title>
 </head>
 <body class="ui container">
-<div class="ui hidden divider"></div>
-    {% block content %}content{% endblock %}
-<div class="ui hidden divider"></div>
+  {% block content %}content{% endblock %}
+
+  <h3 class="ui header">
+    Чрезмерное употребление алкоголя вредит вашему здоровью.
+  </h3>
 </body>
 </html>

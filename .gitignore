@@ -1,6 +1,5 @@
 .DS_Store
 /media/
-/static/
 *.log
 *.pyc
 __pycache__

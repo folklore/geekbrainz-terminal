@@ -1,8 +1,33 @@
 {% extends 'layout.html' %}
 
-{% block title %}Home{% endblock %}
+{% block title %}Главная{% endblock %}
 
 {% block content %}
-  <h1 class="ui header">Welcome to The NoNameBrewery</h1>
-  <h3 class="ui header">We are coming soon ...</h3>
+  <h1 class="ui header">Добро пожаловать!</h1>
+
+  <h2 class="ui header">Рецепты на любой вкус ...</h2>
+
+  <div class="ui three large cards">
+    {% for recipe in recipes %}
+      <a class="card" href="https://www.dog.com">
+        <div class="image">
+          <img src="{{ recipe.cover.url }}">
+        </div>
+        <div class="content">
+          <div class="header">{{ recipe.title }}</div>
+          <div class="meta">
+            <span>IBU: {{ recipe.ibu }}</span>
+            <span>EBC: {{ recipe.ebc }}</span>
+            <span>ALC: {{ recipe.alc }} %</span>
+          </div>
+          <div class="description">
+            {{ recipe.description }}
+          </div>
+          <div class="meta right aligned">
+            варка {{ recipe.duration }} ч.
+          </div>
+        </div>
+      </a>
+    {% endfor %}
+  </div>
 {% endblock %}
