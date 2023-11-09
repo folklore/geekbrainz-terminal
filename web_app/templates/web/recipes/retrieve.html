@@ -1,0 +1,55 @@
+{% extends 'layout.html' %}
+
+{% block title %}Рецепт{% endblock %}
+
+{% block content %}
+  <h1 class="ui center aligned icon header">
+    <i class="beer icon"></i>
+    <div class="content">
+      <span class="ui huge text">{{ recipe.title }}</span>
+    </div>
+  </h1>
+
+  <div class="ui piled segment">
+    <div class="ui four large statistics">
+      <div class="statistic">
+        <div class="value">{{ recipe.ibu }}</div>
+        <div class="label">IBU</div>
+      </div>
+      <div class="statistic">
+        <div class="value">{{ recipe.ebc }}</div>
+        <div class="label">EBC</div>
+      </div>
+      <div class="statistic">
+        <div class="value">{{ recipe.alc }}%</div>
+        <div class="label">ALC</div>
+      </div>
+      <div class="statistic">
+        <div class="value">{{ recipe.duration }}</div>
+        <div class="label">Варка, ч.</div>
+      </div>
+    </div>
+  </div>
+
+  <table class="ui large celled very padded table">
+    <tbody>
+      <tr>
+        <td class="two wide">
+          Описание
+        </td>
+        <td>
+          <img class="ui medium rounded right floated image" src="{{ recipe.cover.url }}">
+          {{ recipe.description }}
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Рецепт
+        </td>
+        <td>
+          {{ recipe.formula }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+{% endblock %}

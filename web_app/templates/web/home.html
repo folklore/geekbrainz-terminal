@@ -5,11 +5,11 @@
 {% block content %}
   <h1 class="ui header">Добро пожаловать!</h1>
 
-  <h2 class="ui header">Рецепты на любой вкус ...</h2>
+  <h2 class="ui dividing header">Рецепты на любой вкус ...</h2>
 
   <div class="ui three large cards">
     {% for recipe in recipes %}
-      <a class="card" href="https://www.dog.com">
+      <a class="card" href="{% url 'recipe-detail' pk=recipe.pk %}">
         <div class="image">
           <img src="{{ recipe.cover.url }}">
         </div>
