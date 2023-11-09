@@ -3,10 +3,10 @@
 {% block title %}Рецепт{% endblock %}
 
 {% block content %}
-  <h1 class="ui center aligned icon header">
-    <i class="beer icon"></i>
+  <h1 class="ui header">
+    <img src="{{ recipe.cover.url }}" class="ui huge circular image">
     <div class="content">
-      <span class="ui huge text">{{ recipe.title }}</span>
+      <span class="ui big text">{{ recipe.title }}</span>
     </div>
   </h1>
 
@@ -38,7 +38,6 @@
           Описание
         </td>
         <td>
-          <img class="ui medium rounded right floated image" src="{{ recipe.cover.url }}">
           {{ recipe.description }}
         </td>
       </tr>

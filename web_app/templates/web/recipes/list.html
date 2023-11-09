@@ -1,0 +1,45 @@
+{% extends 'layout.html' %}
+
+{% block title %}Рецепты{% endblock %}
+
+{% block content %}
+  <h1 class="ui header">
+    <span class="ui big text">Рецепты</span>
+  </h1>
+
+  <div class="ui hidden divider"></div>
+  <div class="ui hidden divider"></div>
+
+  <table class='ui large celled striped selectable table'>
+    <thead>
+      <tr>
+        <th class="four wide">Рецепт</th>
+        <th>Описание</th>
+        <th class="collapsing">Варка</th>
+        <th class="collapsing"></th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for recipe in recipes %}
+      <tr>
+        <td>
+          <a class="ui image header" href="{% url 'recipe-detail' pk=recipe.pk %}">
+            <img class="ui mini rounded image" src="{{ recipe.cover.url }}">
+              <div class="content">
+                {{ recipe.title }}
+                <div class="sub header">
+                  <span>IBU: {{ recipe.ibu }}</span>
+                  <span>EBC: {{ recipe.ebc }}</span>
+                  <span>ALC: {{ recipe.alc }} %</span>
+                </div>
+            </div>
+          </a>
+        </td>
+        <td>{{ recipe.description }}</td>
+        <td>{{ recipe.duration }} ч.</td>
+        <td class="selectable"><a href="{% url 'recipe-detail' pk=recipe.pk %}">Открыть</a></td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

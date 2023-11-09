@@ -15,13 +15,30 @@
           integrity="sha512-3quBdRGJyLy79hzhDDcBzANW+mVqPctrGCfIPosHQtMKb3rKsCxfyslzwlz2wj1dT8A7UX+sEvDjaUv+WExQrA=="
           crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="{% static 'css/application.css' %}" />
-    <title>{% block title %}title{% endblock %} :: Про пиво</title>
+    <title>{% block title %}title{% endblock %} :: Пивовар</title>
 </head>
-<body class="ui container">
-  {% block content %}content{% endblock %}
+<body>
+  <div class="ui container">
+    <div class="ui large centered menu">
+      <div class="header item">
+        <i class="large beer icon"></i>
+        Пивовар
+      </div>
+      <a class="item" href="/">Главная</a>
+      <a class="item" href="{% url 'recipe-list' %}">Рецепты</a>
+      <a class="item">Войти</a>
+      <a class="item">
+        <i class="large github icon"></i>
+      </a>
+    </div>
 
-  <h3 class="ui header">
-    Чрезмерное употребление алкоголя вредит вашему здоровью.
-  </h3>
+    {% block content %}content{% endblock %}
+  </div>
+
+  <div class="ui centered fluid bottom fixed menu">
+    <div class="item">
+      Чрезмерное употребление алкоголя вредит вашему здоровью.
+    </div>
+  </div>
 </body>
 </html>
