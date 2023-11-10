@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+
+{% block title %}Регистрация{% endblock %}
+
+{% block content %}
+  <h1 class="ui centered aligned header"><span class="ui big text">Регистрация</span></h1>
+
+  <div class="ui centered grid">
+    <div class="ten wide column">
+      <div class="ui segment form">
+        <form action="{% url 'sign-up' %}" method="POST">
+          {% csrf_token %}
+
+          {% for field in sign_up_form.visible_fields %}
+            <div class="field">
+              {{ field.label_tag }}
+              {{ field.errors }}
+              {{ field }}
+              {{ field.help_text }}
+            </div>
+          {% endfor %}
+
+          <button class="ui green button" type="submit">Зарегистрироваться</button>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}

@@ -70,6 +70,8 @@ TEMPLATES = [
     },
 ]
 
+APPEND_SLASH = False
+
 WSGI_APPLICATION = 'brewery_project.wsgi.application'
 
 # Database
