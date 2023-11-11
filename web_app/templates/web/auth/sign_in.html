@@ -1,17 +1,17 @@
 {% extends "layout.html" %}
 
-{% block title %}Регистрация{% endblock %}
+{% block title %}Авторизация{% endblock %}
 
 {% block content %}
-  <h1 class="ui centered aligned header"><span class="ui big text">Регистрация</span></h1>
+  <h1 class="ui centered aligned header"><span class="ui big text">Авторизация</span></h1>
 
   <div class="ui centered grid">
     <div class="ten wide column">
       <div class="ui segment form">
-        <form action="{% url 'sign-up' %}" method="POST">
+        <form action="{% url 'sign-in' %}" method="POST">
           {% csrf_token %}
 
-          {% for field in sign_up_form.visible_fields %}
+          {% for field in sign_in_form.visible_fields %}
             <div class="field">
               {{ field.label_tag }}
               {{ field.errors }}
@@ -21,12 +21,12 @@
           {% endfor %}
 
           <div class="ui divider"></div>
-          <button class="ui green button" type="submit">Зарегистрироваться</button>
+          <button class="ui green button" type="submit">Авторизоваться</button>
         </form>
       </div>
 
       <div class="ui segment">
-        <p>Уже имеете учетную запись? <a href="{% url 'sign-in' %}">Авторизуйтесь</a>.</p>
+        <p>Еще не имеете учетной записи? <a href="{% url 'sign-up' %}">Зарегистрируйтесь</a>.</p>
       </div>
     </div>
   </div>

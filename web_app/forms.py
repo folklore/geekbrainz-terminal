@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import AuthenticationForm as SignInForm
 from .models import Recipe, User
 
 

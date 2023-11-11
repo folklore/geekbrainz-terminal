@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect
 from rest_framework import viewsets
 from .models import Recipe
-from django.contrib.auth import login
-from .forms import SignUpForm
+from django.contrib.auth import login, authenticate, logout
+from .forms import SignUpForm, SignInForm
 from django.contrib import messages
+
 
 def home_action(request):
     recipes = Recipe.objects.order_by('?')[:5]
@@ -46,3 +47,32 @@ def sign_up_action(request):
 
     form = SignUpForm()
     return render(request, 'web/auth/sign_up.html', {'sign_up_form': form})
+
+
+def sign_in_action(request):
+    if request.method == 'POST':
+        form = SignInForm(request, request.POST)
+
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+
+            user = authenticate(username=username, password=password)
+
+            if user is not None:
+                login(request, user)
+
+                messages.success(request, 'Вы успешно авторизовались!')
+                return redirect('home')
+
+        messages.error(request, 'В форме авторизации допущены ошибки ...')
+
+    form = SignInForm()
+    return render(request, 'web/auth/sign_in.html', {'sign_in_form': form})
+
+
+def sign_out_action(request):
+    logout(request)
+    messages.info(request, 'До встречи!')
+
+    return redirect('home')
