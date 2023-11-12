@@ -1,9 +1,14 @@
-from django.shortcuts import render, redirect
-from rest_framework import viewsets
-from .models import Recipe
-from django.contrib.auth import login, authenticate, logout
-from .forms import SignUpForm, SignInForm
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
+
+from rest_framework import viewsets
+from rest_framework.decorators import action
+
+from .models import Recipe
+
+from django.contrib.auth import login, authenticate, logout
+from .forms import SignUpForm, SignInForm, RecipeForm
+
 
 
 def home_action(request):
@@ -15,22 +20,33 @@ class RecipesController(viewsets.ViewSet):
     queryset = Recipe.objects.all()
 
     def list(self, request):
-        recipes = Recipe.objects.all()
+        recipes = self.queryset
         return render(request, 'web/recipes/list.html', {'recipes': recipes})
 
     def create(self, request):
         pass
 
     def retrieve(self, request, pk=None):
-        recipe = Recipe.objects.get(pk=pk)
+        recipe = get_object_or_404(self.queryset, pk=pk)
         return render(request, 'web/recipes/retrieve.html', {'recipe': recipe})
 
+    @action(detail=True, methods=['get'])
+    def edit(self, request, pk=None):
+        recipe = get_object_or_404(self.queryset, pk=pk)
+        form = RecipeForm(instance=recipe)
+        return render(request, 'web/recipes/form.html', {'recipe_form': form, 'recipe': recipe})
+
     def update(self, request, pk=None):
-        pass
+        recipe = get_object_or_404(self.queryset, pk=pk)
+        form = RecipeForm(request.POST, request.FILES, instance=recipe)
+
+        if form.is_valid():
+            form.save()
+            return redirect(f'/recipes/{recipe.pk}')
+        return render(request, 'web/recipes/form.html', {'recipe_form': form, 'recipe': recipe})
 
     def destroy(self, request, pk=None):
         pass
-
 
 def sign_up_action(request):
     if request.method == 'POST':

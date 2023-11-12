@@ -22,6 +22,8 @@ ALLOWED_HOSTS = [
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 
+CSRF_HEADER_NAME = 'X-CSRFToken'
+
 if DEBUG:
     CSRF_TRUSTED_ORIGINS = ['http://*', 'https://*']
 else:
@@ -44,6 +46,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'brewery_project.middlewares.HttpPostTunnelingMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
