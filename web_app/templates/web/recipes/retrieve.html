@@ -53,6 +53,16 @@
   </table>
 
   {% if user.is_authenticated and user.pk == recipe.author_id %}
-    <a href="{% url 'recipe-edit' pk=recipe.pk %}" class="ui orange basic button">Редактировать рецепт</a>
+    <div class="ui divider"></div>
+
+    <form action="{% url 'recipe-detail' pk=recipe.pk %}"
+          method="POST">
+      {% csrf_token %}
+      <input type="hidden" name="_method" value="DELETE">
+
+      <a href="{% url 'recipe-edit' pk=recipe.pk %}" class="ui orange basic button">Редактировать рецепт</a>
+
+      <input type="submit" value="Удалить рецепт" class="ui basic red button">
+    </form>
   {% endif %}
 {% endblock %}

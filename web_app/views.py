@@ -90,7 +90,15 @@ class RecipesController(viewsets.ViewSet):
         return render(request, 'web/recipes/edit.html', {'recipe_form': form, 'recipe': recipe})
 
     def destroy(self, request, pk=None):
-        pass
+        if not request.user.is_authenticated:
+            return redirect(f'/sign_in')
+        recipe = get_object_or_404(self.queryset, pk=pk)
+
+        if request.user.pk != recipe.author_id:
+            return HttpResponse('Unauthorized', status=401)
+        recipe.delete()
+
+        return redirect(f'/recipes')
 
 
 def sign_up_action(request):

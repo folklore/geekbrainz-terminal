@@ -17,7 +17,7 @@ class HttpPostTunnelingMiddleware:
                     request.method = 'DELETE'
                     request.META['REQUEST_METHOD'] = 'DELETE'
                     request.DELETE = request.POST
-                request.META[settings.CSRF_HEADER_NAME] = request.PUT['csrfmiddlewaretoken']
+                request.META[settings.CSRF_HEADER_NAME] = request.POST['csrfmiddlewaretoken']
 
         response = self.get_response(request)
         return response
