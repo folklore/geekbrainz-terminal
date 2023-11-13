@@ -52,5 +52,7 @@
     </tbody>
   </table>
 
-  <a href="{% url 'recipe-edit' pk=recipe.pk %}" class="ui orange basic button">Редактировать рецепт</a>
+  {% if user.is_authenticated and user.pk == recipe.author_id %}
+    <a href="{% url 'recipe-edit' pk=recipe.pk %}" class="ui orange basic button">Редактировать рецепт</a>
+  {% endif %}
 {% endblock %}

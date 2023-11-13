@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib import messages
 
@@ -35,14 +35,19 @@ class RecipesController(viewsets.ViewSet):
 
     @action(detail=False, methods=['get'])
     def new(self, request):
+        if not request.user.is_authenticated:
+            return redirect(f'/sign_in')
         recipe = Recipe()
         form = RecipeForm(instance=recipe)
+
         return render(request, 'web/recipes/new.html', {
             'recipe_form': form,
             'recipe': recipe
         })
 
     def create(self, request):
+        if not request.user.is_authenticated:
+            return redirect(f'/sign_in')
         recipe = Recipe(author = request.user)
         form = RecipeForm(request.POST, request.FILES, instance=recipe)
 
@@ -57,15 +62,26 @@ class RecipesController(viewsets.ViewSet):
 
     @action(detail=True, methods=['get'])
     def edit(self, request, pk=None):
+        if not request.user.is_authenticated:
+            return redirect(f'/sign_in')
         recipe = get_object_or_404(self.queryset, pk=pk)
+
+        if request.user.pk != recipe.author_id:
+            return HttpResponse('Unauthorized', status=401)
         form = RecipeForm(instance=recipe)
+
         return render(request, 'web/recipes/edit.html', {
             'recipe_form': form,
             'recipe': recipe
         })
 
     def update(self, request, pk=None):
+        if not request.user.is_authenticated:
+            return redirect(f'/sign_in')
         recipe = get_object_or_404(self.queryset, pk=pk)
+
+        if request.user.pk != recipe.author_id:
+            return HttpResponse('Unauthorized', status=401)
         form = RecipeForm(request.POST, request.FILES, instance=recipe)
 
         if form.is_valid():
