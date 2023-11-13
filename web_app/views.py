@@ -10,7 +10,6 @@ from django.contrib.auth import login, authenticate, logout
 from .forms import SignUpForm, SignInForm, RecipeForm
 
 
-
 def home_action(request):
     recipes = Recipe.objects.order_by('?')[:5]
     return render(request, 'web/home.html', {'recipes': recipes})
@@ -23,8 +22,23 @@ class RecipesController(viewsets.ViewSet):
         recipes = self.queryset
         return render(request, 'web/recipes/list.html', {'recipes': recipes})
 
+    @action(detail=False, methods=['get'])
+    def new(self, request):
+        recipe = Recipe()
+        form = RecipeForm(instance=recipe)
+        return render(request, 'web/recipes/new.html', {
+            'recipe_form': form,
+            'recipe': recipe
+        })
+
     def create(self, request):
-        pass
+        recipe = Recipe(author = request.user)
+        form = RecipeForm(request.POST, request.FILES, instance=recipe)
+
+        if form.is_valid():
+            form.save()
+            return redirect(f'/recipes/{recipe.pk}')
+        return render(request, 'web/recipes/new.html', {'recipe_form': form, 'recipe': recipe})
 
     def retrieve(self, request, pk=None):
         recipe = get_object_or_404(self.queryset, pk=pk)
@@ -34,7 +48,10 @@ class RecipesController(viewsets.ViewSet):
     def edit(self, request, pk=None):
         recipe = get_object_or_404(self.queryset, pk=pk)
         form = RecipeForm(instance=recipe)
-        return render(request, 'web/recipes/form.html', {'recipe_form': form, 'recipe': recipe})
+        return render(request, 'web/recipes/edit.html', {
+            'recipe_form': form,
+            'recipe': recipe
+        })
 
     def update(self, request, pk=None):
         recipe = get_object_or_404(self.queryset, pk=pk)
@@ -43,10 +60,11 @@ class RecipesController(viewsets.ViewSet):
         if form.is_valid():
             form.save()
             return redirect(f'/recipes/{recipe.pk}')
-        return render(request, 'web/recipes/form.html', {'recipe_form': form, 'recipe': recipe})
+        return render(request, 'web/recipes/edit.html', {'recipe_form': form, 'recipe': recipe})
 
     def destroy(self, request, pk=None):
         pass
+
 
 def sign_up_action(request):
     if request.method == 'POST':

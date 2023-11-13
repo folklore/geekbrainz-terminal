@@ -1,0 +1,28 @@
+{% extends 'layout.html' %}
+
+{% block title %}Добавление рецепта{% endblock %}
+
+{% block content %}
+  <h1 class="ui header">
+    <span class="ui big text">Добавление рецепта</span>
+  </h1>
+
+  <form action="{% url 'recipe-list' %}"
+        method="POST"
+        class="ui form segment"
+        enctype="multipart/form-data">
+    {% csrf_token %}
+
+    {% for field in recipe_form.visible_fields %}
+      <div class="field">
+        {{ field.label_tag }}
+        {{ field.errors }}
+        {{ field }}
+        {{ field.help_text }}
+      </div>
+    {% endfor %}
+
+    <div class="ui divider"></div>
+    <input type="submit" value="Сохранить" class="ui button">
+  </form>
+{% endblock %}
