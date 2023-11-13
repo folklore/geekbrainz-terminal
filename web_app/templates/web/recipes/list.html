@@ -7,6 +7,28 @@
     <span class="ui big text">Рецепты</span>
   </h1>
 
+  <div class="ui pagination menu">
+    {% if recipes.has_previous %}
+      <a class="item" href="?page={{ recipes.previous_page_number }}">
+        <i class="angle left icon"></i>
+      </a>
+    {% endif %}
+
+    {% for p in recipes.paginator.page_range %}
+      {% if recipes.number != p %}
+        <a class="item" href="?page={{ p }}">{{ p }}</a>
+      {% else %}
+        <div class="disabled item">{{ p }}</div>
+      {% endif %}
+    {% endfor %}
+
+    {% if recipes.has_next %}
+      <a class="item" href="?page={{ recipes.next_page_number }}">
+        <i class="angle right icon"></i>
+      </a>
+    {% endif %}
+  </div>
+
   <table class='ui large celled striped selectable table'>
     <thead>
       <tr>

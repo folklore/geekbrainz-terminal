@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib import messages
 
 from rest_framework import viewsets
@@ -20,6 +21,16 @@ class RecipesController(viewsets.ViewSet):
 
     def list(self, request):
         recipes = self.queryset
+        paginator = Paginator(recipes, 5)
+
+        page = request.GET.get('page')
+
+        try:
+            recipes = paginator.page(page)
+        except PageNotAnInteger:
+            recipes = paginator.page(1)
+        except EmptyPage:
+            recipes = paginator.page(paginator.num_pages)
         return render(request, 'web/recipes/list.html', {'recipes': recipes})
 
     @action(detail=False, methods=['get'])
