@@ -14,6 +14,8 @@ SECRET_KEY = 'secret' # os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+PROJECT_NAME = "brewery"
+
 ALLOWED_HOSTS = [
     '127.0.0.1',
     'ifolklore.pythonanywhere.com',
@@ -32,6 +34,7 @@ else:
 # Application definition
 
 INSTALLED_APPS = [
+    'daphne',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -75,7 +78,7 @@ TEMPLATES = [
 
 APPEND_SLASH = False
 
-WSGI_APPLICATION = 'brewery_project.wsgi.application'
+ASGI_APPLICATION = 'brewery_project.asgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases

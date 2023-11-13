@@ -10,6 +10,13 @@ class Category(models.Model):
         return self.title
 
 
+class Ingredient(models.Model):
+    name = models.CharField(max_length=128)
+
+    def __str__(self):
+        return self.name
+
+
 class Recipe(models.Model):
     author = models.ForeignKey(User,
                                on_delete=models.CASCADE)
@@ -35,6 +42,7 @@ class Recipe(models.Model):
     cover = models.ImageField(upload_to = 'images/')
 
     categories = models.ManyToManyField(Category)
+    ingredients = models.ManyToManyField(Ingredient)
 
     def __str__(self):
         return self.title
@@ -63,24 +71,3 @@ class Recipe(models.Model):
             )
 
         resized_image.save(self.cover.path)
-
-
-class Product(models.Model):
-    title = models.CharField(max_length=128)
-
-    def __str__(self):
-        return self.title
-
-
-class Ingredient(models.Model):
-    product = models.ForeignKey(Product,
-                                on_delete=models.RESTRICT)
-    recipe = models.ForeignKey(Recipe,
-                               on_delete=models.CASCADE)
-    volume = models.IntegerField(null=False)
-    measure = models.CharField(null=False,
-                               blank=False,
-                               max_length=32)
-
-    def __str__(self):
-        return self.product.title
