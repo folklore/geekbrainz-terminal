@@ -16,7 +16,8 @@ class RecipeForm(forms.ModelForm):
                   'alc',
                   'duration',
                   'cover',
-                  'categories']
+                  'categories',
+                  'ingredients']
 
 
 class SignUpForm(UserCreationForm):
