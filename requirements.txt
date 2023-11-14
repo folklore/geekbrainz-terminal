@@ -29,7 +29,9 @@ uvicorn==0.23.2
 uvloop==0.17.0
 watchfiles==0.20.0
 websockets==11.0.3
-# mysqlclient==2.2.0
+psycopg==3.1.12
 python-dotenv==1.0.0
 daphne==4.0.0
 channels==4.0.0
+fastapi==0.103.2
+djangorestframework==3.14.0
