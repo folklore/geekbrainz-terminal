@@ -10,6 +10,10 @@
     </div>
   </h1>
 
+  {% for category in recipe.categories.all %}
+    <kbd class="ui label">{{ category.title }}</kbd>
+  {% endfor %}
+
   <div class="ui piled segment">
     <div class="ui four large statistics">
       <div class="statistic">
@@ -51,6 +55,10 @@
       </tr>
     </tbody>
   </table>
+
+  {% for ingredient in recipe.ingredients.all %}
+    <kbd class="ui label">{{ ingredient.name }}</kbd>
+  {% endfor %}
 
   {% if user.is_authenticated and user.pk == recipe.author_id %}
     <div class="ui divider"></div>
